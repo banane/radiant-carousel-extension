@@ -70,8 +70,8 @@
 				$(obj).append(html);
 			
 				// Pause/play button(img)	
-				html = '<a href="javascript:void(0);"><img id="pause_btn'+randID+'" src="images/carousel_admin/pause.png" style="position:absolute;top:3px;right:3px;border:none" alt="Pause" /></a>';
-				html += '<a href="javascript:void(0);"><img id="play_btn'+randID+'" src="images/carousel_admin/play.png" style="position:absolute;top:3px;right:3px;border:none;display:none;" alt="Play" /></a>';
+				html = '<a href="javascript:void(0);"><img id="pause_btn'+randID+'" src="/images/carousel_admin/pause.png" style="position:absolute;top:3px;right:3px;border:none" alt="Pause" /></a>';
+				html += '<a href="javascript:void(0);"><img id="play_btn'+randID+'" src="/images/carousel_admin/play.png" style="position:absolute;top:3px;right:3px;border:none;display:none;" alt="Play" /></a>';
 				$(obj).append(html);
 				$('#pause_btn'+randID).css('opacity','.5').hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.5'},250)});
 				$('#pause_btn'+randID).click(function(){
@@ -168,8 +168,8 @@
 				{
 						if(!autopilot)
 						{
-							html = '<img style="position:absolute;top:2px;right:18px;display:none;cursor:pointer" src="images/carousel_admin/down.png" title="Minimize" alt="minimize" id="min" /><img style="position:absolute;top:2px;right:18px;display:none;cursor:pointer" src="images/carousel_admin/up.png" title="Maximize" alt="maximize" id="max" />';
-							html += '<img style="position:absolute;top:2px;right:6px;display:none;cursor:pointer" src="images/carousel_admin/close.png" title="Close" alt="close" id="close" />';
+							html = '<img style="position:absolute;top:2px;right:18px;display:none;cursor:pointer" src="/images/carousel_admin/down.png" title="Minimize" alt="minimize" id="min" /><img style="position:absolute;top:2px;right:18px;display:none;cursor:pointer" src="/images/carousel_admin/up.png" title="Maximize" alt="maximize" id="max" />';
+							html += '<img style="position:absolute;top:2px;right:6px;display:none;cursor:pointer" src="/images/carousel_admin/close.png" title="Close" alt="close" id="close" />';
 							$('#textholder'+randID).append(html);
 							$('#min').fadeIn(250).click(function(){$('#textholder'+randID).animate({marginBottom:(-imgHeight*o.textholderHeight)-(correctTHHeight * 2)+24+'px'},500,function(){$("#min,#max").toggle();});});
 							$('#max').click(function(){$('#textholder'+randID).animate({marginBottom:'0px'},500,function(){$("#min,#max").toggle();});});
