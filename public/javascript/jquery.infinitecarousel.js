@@ -12,15 +12,19 @@
 	$.fn.extend({ 
 		infiniteCarousel: function(options)
 		{
+			//Options for infinite Carousel
 			var defaults = 
 			{
-				transitionSpeed : 1500,
-				displayTime : 6000,
+				transitionSpeed : 250,//how fast the slides move
+				displayTime : 6000, //how long before the slides move
+				setTimer: 0, //set to true if you want the timer to start by default
 				textholderHeight : .2,
-				displayProgressBar : 1,
-				displayThumbnails: 1,
-				displayThumbnailNumbers: 1,
-				displayThumbnailBackground: 1,
+				displayProgressBar : 0, //set to true to display progress bar
+				displayThumbnails: 0, //set to true to display thumbnails
+				displayThumbnailNumbers: 0, //set to true to display thumbnail numbers
+				displayThumbnailBackground: 0, //set to true to display thummnail background
+				displayPlayPause: 0, //set to true to display play/pause buttons
+				animateTextholder: 0, //toggle to let textholder move up and down between images
 				thumbnailWidth: '20px',
 				thumbnailHeight: '20px',
 				thumbnailFontSize: '.7em'
@@ -31,12 +35,12 @@
     			var randID = Math.round(Math.random()*100000000);
 				var o=options;
 				var obj = $(this);
-				var curr = 1;
+				var curr = 1; 
 
 				var numImages = $('img', obj).length; // Number of images
 				var imgHeight = $('img:first', obj).height();
 				var imgWidth = $('img:first', obj).width();
-				var autopilot = 1;
+				var autopilot = 1; //set to false to display close and hide buttons on text panel
 		
 				$('p', obj).hide(); // Hide any text paragraphs in the carousel
 				$(obj).width(imgWidth).height(imgHeight);
@@ -61,51 +65,79 @@
 				$(obj).append('<div id="textholder'+randID+'" class="textholder" style="position:absolute;bottom:0px;margin-bottom:'+-imgHeight*o.textholderHeight+'px;left:'+$(obj).css('paddingLeft')+'"></div>');
 				var correctTHWidth = parseInt($('#textholder'+randID).css('paddingTop'));
 				var correctTHHeight = parseInt($('#textholder'+randID).css('paddingRight'));
-				$('#textholder'+randID).width(imgWidth-(correctTHWidth * 2)).height((imgHeight*o.textholderHeight)-(correctTHHeight * 2)).css({'backgroundColor':'#FFF','opacity':'0.5'});
+				$('#textholder'+randID).width(imgWidth-(correctTHWidth * 2)).height((imgHeight*o.textholderHeight)-(correctTHHeight * 2)).css({'backgroundColor':'#333','opacity':'0.5'});
 				showtext($('li:eq(1) p', obj).html());
+				
+				//build overlay div that is 200 px wide, 100% of height of the carousel, and append to both sides.
+				html = '<div id="overlayLeft" style="background-color:#333; width:200px; height:325px;position:absolute;right:0px;opacity:.75;filter:alpha(opacity=\'75\');" onclick="javascript:void(0);"></div>';
+				html += '<div id="overlayRight" style="background-color:#333; width:200px; height:325px;position:absolute;left:0px;opacity:.75;filter:alpha(opacity=\'75\');" onclick="javascript:void(0);"></div>';
+				$(obj).append(html);
+				
+
 			
 				// Prev/next button(img) 
-				html = '<div id="btn_rt'+randID+'" style="position:absolute;right:0;top:'+((imgHeight/2)-15)+'px"><a href="javascript:void(0);"><img style="border:none;margin-right:2px" src="images/carousel_admin/rt.png" /></a></div>';
-				html += '<div id="btn_lt'+randID+'" style="position:absolute;left:0;top:'+((imgHeight/2)-15)+'px"><a href="javascript:void(0);"><img style="border:none;margin-left:2px" src="images/carousel_admin/lt.png" /></a></div>';
+				html = '<div id="btn_rt'+randID+'" style="position:absolute;right:210px;bottom:20px"><a href="javascript:void(0);"><img style="border:none;margin-right:2px" src="/images/carousel_admin/rt.png" /></a></div>';
+				html += '<div id="btn_lt'+randID+'" style="position:absolute;left:210px;bottom:20px"><a href="javascript:void(0);"><img style="border:none;margin-left:2px" src="/images/carousel_admin/lt.png" /></a></div>';
 				$(obj).append(html);
 			
 				// Pause/play button(img)	
-				html = '<a href="javascript:void(0);"><img id="pause_btn'+randID+'" src="/images/carousel_admin/pause.png" style="position:absolute;top:3px;right:3px;border:none" alt="Pause" /></a>';
-				html += '<a href="javascript:void(0);"><img id="play_btn'+randID+'" src="/images/carousel_admin/play.png" style="position:absolute;top:3px;right:3px;border:none;display:none;" alt="Play" /></a>';
-				$(obj).append(html);
-				$('#pause_btn'+randID).css('opacity','.5').hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.5'},250)});
-				$('#pause_btn'+randID).click(function(){
-					autopilot = 0;
-					$('#progress'+randID).stop().fadeOut();
-					clearTimeout(clearInt);
-					$('#pause_btn'+randID).fadeOut(250);
-					$('#play_btn'+randID).fadeIn(250);
-					showminmax();
-				});
-				$('#play_btn'+randID).css('opacity','.5').hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.5'},250)});
-				$('#play_btn'+randID).click(function(){
-					autopilot = 1;
-					anim('next');
-					$('#play_btn'+randID).hide();
-					clearInt=setInterval(function(){anim('next');},o.displayTime+o.transitionSpeed);
-					setTimeout(function(){$('#pause_btn'+randID).show();$('#progress'+randID).fadeIn().width(imgWidth).height(5);},o.transitionSpeed);
-				});
+				if(o.displayPlayPause) {
+					html = '<a href="javascript:void(0);"><img id="pause_btn'+randID+'" src="/images/carousel_admin/pause.png" style="position:absolute;top:3px;right:3px;border:none" alt="Pause" /></a>';
+					html += '<a href="javascript:void(0);"><img id="play_btn'+randID+'" src="/images/carousel_admin/play.png" style="position:absolute;top:3px;right:3px;border:none;display:none;" alt="Play" /></a>';
+					$(obj).append(html);
+					$('#pause_btn'+randID).css('opacity','.5').hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.5'},250)});
+					$('#pause_btn'+randID).click(function(){
+						//autopilot = 0;
+						$('#progress'+randID).stop().fadeOut();
+						clearTimeout(clearInt);
+						$('#pause_btn'+randID).fadeOut(250);
+						$('#play_btn'+randID).fadeIn(250);
+						showminmax();
+					});
+					$('#play_btn'+randID).css('opacity','.5').hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.5'},250)});
+					$('#play_btn'+randID).click(function(){
+						//autopilot = 1;
+						anim('next');
+						$('#play_btn'+randID).hide();
+						clearInt=setInterval(function(){anim('next');},o.displayTime+o.transitionSpeed);
+						setTimeout(function(){$('#pause_btn'+randID).show();$('#progress'+randID).fadeIn().width(imgWidth).height(5);},o.transitionSpeed);
+					});
+				}
 				
 				// Left and right arrow image button actions
 				$('#btn_rt'+randID).css('opacity','.75').click(function(){
-					autopilot = 0;
+					//autopilot = 0;
 					$('#progress'+randID).stop().fadeOut();
 					anim('next');
 					setTimeout(function(){$('#play_btn'+randID).fadeIn(250);},o.transitionSpeed);
 					clearTimeout(clearInt);
 				}).hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.75'},250)});
 				$('#btn_lt'+randID).css('opacity','.75').click(function(){
-					autopilot = 0;
+					//autopilot = 0;
 					$('#progress'+randID).stop().fadeOut();
 					anim('prev');
 					setTimeout(function(){$('#play_btn'+randID).fadeIn(250);},o.transitionSpeed);
 					clearTimeout(clearInt);
 				}).hover(function(){$(this).animate({opacity:'1'},250)},function(){$(this).animate({opacity:'.75'},250)});
+				
+				// Left and right arrow div actions
+				$('#overlayRight').click(function(){
+					$('#progress'+randID).stop().fadeOut();
+					anim('prev');
+					setTimeout(function(){$('#play_btn'+randID).fadeIn(500);},o.transitionSpeed);
+					clearTimeout(clearInt);
+				}).hover(function(){$(this).animate({opacity:'.25'},500)},function(){$(this).animate({opacity:'.75'},500)});
+				$('#overlayLeft').click(function(){
+					$('#progress'+randID).stop().fadeOut();
+					anim('next');
+					setTimeout(function(){$('#play_btn'+randID).fadeIn(500);},o.transitionSpeed);
+					clearTimeout(clearInt);
+				}).hover(function(){$(this).animate({opacity:'.25'},500)},function(){$(this).animate({opacity:'.75'},500)});
+				
+				//make entire carousel go dark d
+				html = '<div id="overlayCenter" style="background-color:#333; display:none; height:325px;position:absolute;left:200px;right:200px; opacity:.75;filter:alpha(opacity=\'75\');"></div>';
+				$(obj).append(html);
+				
 
 				if(o.displayThumbnails)
 				{
@@ -140,7 +172,7 @@
 						clearTimeout(clearInt);
 						//alert(event.data.src+' '+this.id+' '+target_num[1]+' '+curr);
 						$('#thumbs'+randID+' div').css({'cursor':'default'}).unbind('click'); // Unbind the thumbnail click event until the transition has ended
-						autopilot = 0;
+						//autopilot = 0;
 						setTimeout(function(){$('#play_btn'+randID).fadeIn(250);},o.transitionSpeed);
 					}
 					if(target_num[1] > curr)
@@ -155,15 +187,24 @@
 					}
 				}
 
+				//adds the text to the text panel and shows it
 				function showtext(t)
 				{
 					// the text will always be the text of the second list item (if it exists)
 					if(t != null)
 					{
-						$('#textholder'+randID).html(t).animate({marginBottom:'0px'},500); // Raise textholder
+						var pTag = '<p style="margin:7px 35px 0 35px;">' + t + '</p>'
+						$('#textholder'+randID).html(pTag).animate({marginBottom:'0px'},500); // Raise textholder
 						showminmax();
 					}
+					else { //if no text was provided for this image then clear the textholder
+						
+						//we still want to raise the textholder just incase the first image doesn't include text
+						$('#textholder'+randID).html('').animate({marginBottom:'0px'},500);
+						
+					}
 				}
+				//functions controls the min and max of the text panel
 				function showminmax()
 				{
 						if(!autopilot)
@@ -184,11 +225,13 @@
 				function anim(direction,dist)
 				{
 					// Fade left/right arrows out when transitioning
-					$('#btn_rt'+randID).fadeOut(500);
-					$('#btn_lt'+randID).fadeOut(500);
+					$('#btn_rt'+randID).fadeOut(5);
+					$('#btn_lt'+randID).fadeOut(5);
+					 
 					
 					// animate textholder out of frame
-					$('#textholder'+randID).animate({marginBottom:(-imgHeight*o.textholderHeight)-(correctTHHeight * 2)+'px'},500);					
+					if(o.animateTextholder){$('#textholder'+randID).animate({marginBottom:(-imgHeight*o.textholderHeight)-(correctTHHeight * 2)+'px'},500);}				
+					 
 
 					//?? Fade out play/pause?
 					$('#pause_btn'+randID).fadeOut(250);
@@ -208,9 +251,10 @@
 									$('li:first', obj).clone().insertAfter($('li:last', obj));
 									$('li:first', obj).remove();
 								}
-								$('#btn_rt'+randID).fadeIn(500);
-								$('#btn_lt'+randID).fadeIn(500);
+								$('#btn_rt'+randID).fadeIn(5);
+								$('#btn_lt'+randID).fadeIn(5);
 								$('#play_btn'+randID).fadeIn(250);
+								 
 								showtext($('li:eq(1) p', obj).html());
 								$(this).css({'left':-imgWidth});
 								curr = curr+dist;
@@ -228,8 +272,9 @@
 								.animate({left:-imgWidth*2},o.transitionSpeed,function(){
 									$('li:first', obj).remove();
 									$('ul', obj).css('left',-imgWidth+'px');
-									$('#btn_rt'+randID).fadeIn(500);
-									$('#btn_lt'+randID).fadeIn(500);
+									$('#btn_rt'+randID).fadeIn(5);
+									$('#btn_lt'+randID).fadeIn(5);
+									 
 									if(autopilot) $('#pause_btn'+randID).fadeIn(250);
 									showtext($('li:eq(1) p', obj).html());
 									if(autopilot)
@@ -253,8 +298,9 @@
 							$('li:gt('+(numImages-(dist+1))+')', obj).clone().insertBefore($('li:first', obj));
 							$('ul', obj).css({'left':(-imgWidth*(dist+1))}).animate({left:-imgWidth},o.transitionSpeed,function(){
 								$('li:gt('+(numImages-1)+')', obj).remove();
-								$('#btn_rt'+randID).fadeIn(500);
-								$('#btn_lt'+randID).fadeIn(500);
+								$('#btn_rt'+randID).fadeIn(5);
+								$('#btn_lt'+randID).fadeIn(5);
+								 
 								$('#play_btn'+randID).fadeIn(250);
 								showtext($('li:eq(1) p', obj).html());
 								curr = curr - dist;
@@ -272,8 +318,9 @@
 								.css('left',-imgWidth*2+'px')
 								.animate({left:-imgWidth},o.transitionSpeed,function(){
 									$('li:last', obj).remove();
-									$('#btn_rt'+randID).fadeIn(500);
-									$('#btn_lt'+randID).fadeIn(500);
+									$('#btn_rt'+randID).fadeIn(5);
+									$('#btn_lt'+randID).fadeIn(5);
+									 
 									if(autopilot) $('#pause_btn'+randID).fadeIn(250);
 									showtext($('li:eq(1) p', obj).html());
 									curr=curr-1;
@@ -284,12 +331,17 @@
 					}
 				}
 
-				var clearInt = setInterval(function(){anim('next');},o.displayTime+o.transitionSpeed);
+			var clearInt = setInterval(function(){anim('next');},o.displayTime+o.transitionSpeed);
 				$('#progress'+randID).animate({'width':0},o.displayTime+o.transitionSpeed,function(){
 					$('#pause_btn'+randID).fadeOut(100);
-					setTimeout(function(){$('#pause_btn'+randID).fadeIn(250)},o.transitionSpeed)
+					 
+					setTimeout(function(){$('#pause_btn'+randID).fadeIn(250)},o.transitionSpeed) 
 				});
-  		});
-    	}
+  
+			//Toggles whether or not the display starts with the timer activated
+			if(!o.setTimer){clearTimeout(clearInt);}
+			
+		});
+	}
 	});
 })(jQuery);

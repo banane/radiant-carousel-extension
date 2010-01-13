@@ -4,7 +4,7 @@ module CarouselTag
   desc "Creates a rotating image banner within a page"
   tag "carousel" do |tag|
 
-    %{ <div id="carousel">
+    %{ <div id="headerCarousel">
         	<ul>
         		<li><img src="images/carousel/#{tag.attr['picture_1']}" /><p>#{tag.attr['caption_1']}</p></li>
         		<li><img src="images/carousel/#{tag.attr['picture_2']}"   /><p>#{tag.attr['caption_2']}</p></li>
@@ -17,7 +17,7 @@ module CarouselTag
   
   desc "Loads images from a common directory and displays with no mark-up"
   tag "carousel_batch" do |tag|
-    html = '<div id="carousel"><ul>'
+    html = '<div id="headerCarousel"><ul>'
     
     @carousel_imgs = []
     dirpath = RAILS_ROOT + '/public/images/carousel/'
@@ -25,7 +25,7 @@ module CarouselTag
       filepath = dirpath + entry
       imgpath = '/images/carousel/' + entry
       if(File.file?(filepath))
-        html += "<li><img src=" + imgpath + "></li>"      
+        html += "<li><img src=" + imgpath + ' target="_top"></li>'      
       end
     end
 

@@ -7,21 +7,26 @@ To Install
 1. In your vendor/extensions directory, enter:
 git clone git@github.com:banane/radiant-carousel-extension.git carousel
 
-2. In your radiant root directory, enter:
+2. In your radiant root, do the following to upload a set of photos from a local directory:
+rake radiant:extensions:carousel:copy_images
+
+3. You will be prompted for your local directory. Once you enter that, all of the file will be copied to a  publicly viewable directory for Carousel to read from (and do the HTML mark-up for you.)
+
+NOTE: You can manually move images files to the directory /vendor/extensions/carousel/public/images/carousel if they are in various locaitons. You can also re-run the copy images rake task to add to the directory.
+
+4. In your radiant root directory, enter:
 rake radiant:extensions:carousel:update
 
-3. Move or copy the images you wish to rotate to the  /vendor/extensions/carousel/public/carousel directory.
-
-4. In the Radiant Admin UI interface, go to the page where you want the carousel. Now, have a choice of enumerating each image, or using the batch tag.
+5. In the Radiant Admin UI interface, go to the page where you want the carousel. Now, have a choice of enumerating each image, or using the batch tag.
 
 4a. Enumerated image tag "<r:carousel />". Use the Carousel tag to specify each image up to 3. Use attributes: picture_1="", picture_2="", picture_3="" and caption_1,2,3, etc. 
 
-Alternatively, you can use <r:carousel_batch /> tag. This tag takes one argument, the text file that contains the captions, each on a new line. 
+Alternatively, you can use <r:carousel_batch /> tag. This tag doesn't have any options.
 
 <r:carousel_batch caption_file="captions.txt" alt_text_file="">
 
 5. Lastly, make sure the layout that your page is using has the following HTML tags in its header, in this order. Change [your root directory] to your domain, such as "http://www.acme.com/." The files stem from the public (main) directory on your web server.
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-<script type="text/javascript" src="[your root directory]/javascript/jquery.infinitecarousel.js"></script>
-<script type="text/javascript" src="[your root directory]/javascript/carousel.js"></script>
-<LINK REL=StyleSheet HREF="http://localhost:3000/stylesheets/carousel.css" TYPE="text/css" MEDIA=screen> 
+<script type="text/javascript" src="/javascript/jquery.infinitecarousel.js"></script>
+<script type="text/javascript" src="/javascript/carousel.js"></script>
+<LINK REL=StyleSheet HREF="/stylesheet/carousel.css" TYPE="text/css" MEDIA=screen> 

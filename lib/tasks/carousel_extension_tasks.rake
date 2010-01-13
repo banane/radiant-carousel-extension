@@ -32,13 +32,13 @@ namespace :radiant do
         puts "Please enter the directory:"
 
         dirpath = $stdin.gets.chomp
-        target_dirpath = '/public/images/carousel/'
+        target_dirpath = CarouselExtension.root + '/public/images/carousel/'
 
         Dir.foreach(dirpath) do |entry|
           filepath = dirpath + entry
           if(File.file?(filepath))
              puts "Copying file: #{filepath}"
-             cp filepath, RAILS_ROOT + target_dirpath, :verbose=>false
+             cp filepath, target_dirpath, :verbose=>false
           end
         end
         puts "All files copied to public directory from #{dirpath}."

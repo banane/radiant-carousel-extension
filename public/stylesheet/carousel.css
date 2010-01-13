@@ -1,30 +1,29 @@
 body {
-	padding-top: 50px;
+	margin:0;
+	font-family:Helvetica, Arial, sans-serif;
 }
-#carousel {
-	margin: 0 auto;
-	width: 400px;
-	height: 390px;
-	padding: 0;
-	overflow: scroll;
-	border: 2px solid #999;
+#headerCarousel {
+	margin:0 auto;
+	padding: 0 200px;
+	width:400px;
+	height:310px;
+	overflow:scroll;
 }
-#carousel ul {
-	list-style: none;
-	width: 1500px;
-	margin: 0;
-	padding: 0;
-	position: relative;
-}
-#carousel li {
-	display: inline;
-	float: left;
+#headerCarousel + div {
+	margin:0 auto;
 }
 .textholder {
-	text-align: left;
-	font-size: small;
-	padding: 6px;
-	-moz-border-radius: 6px 6px 0 0;
-	-webkit-border-top-left-radius: 6px;
-	-webkit-border-top-right-radius: 6px;
+	text-align:center;
+	font-face:Helvetica, Arial, sans-serif;
+	font-size:small;
+	padding:6px;
+	color:#FFF;
+	opacity:1;
+}
+textholder p {
+	color:#FFF;
+}
+#headerCarousel ul{
+	width:900px;
+	background-color:#FFF;
 }
