@@ -14,8 +14,23 @@ module CarouselTag
       #{tag.expand}
     }
   end
-  tag "carousel_batch" do |tag|
   
-  end
+  desc "Loads images from a common directory and displays with no mark-up"
+  tag "carousel_batch" do |tag|
+    html = '<div id="carousel"><ul>'
     
+    @carousel_imgs = []
+    dirpath = RAILS_ROOT + '/public/images/carousel/'
+    Dir.foreach(dirpath) do |entry|
+      filepath = dirpath + entry
+      imgpath = '/images/carousel/' + entry
+      if(File.file?(filepath))
+        html += "<li><img src=" + imgpath + "></li>"      
+      end
+    end
+
+    
+    html += '</ul></div>'
+    html << tag.expand
+  end    
 end
