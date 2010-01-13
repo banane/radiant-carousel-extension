@@ -1,11 +1,30 @@
+body {
+	padding-top: 50px;
+}
+#carousel {
+	margin: 0 auto;
+	width: 400px;
+	height: 390px;
+	padding: 0;
+	overflow: scroll;
+	border: 2px solid #999;
+}
 #carousel ul {
-    list-style: none;
-    width: 1500px;
-    margin: 0;
-    padding: 0;
-    position: relative;
+	list-style: none;
+	width: 1500px;
+	margin: 0;
+	padding: 0;
+	position: relative;
 }
 #carousel li {
-    display: inline;
-    float: left;
-} 
+	display: inline;
+	float: left;
+}
+.textholder {
+	text-align: left;
+	font-size: small;
+	padding: 6px;
+	-moz-border-radius: 6px 6px 0 0;
+	-webkit-border-top-left-radius: 6px;
+	-webkit-border-top-right-radius: 6px;
+}

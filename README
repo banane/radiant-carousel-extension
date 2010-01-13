@@ -1,3 +1,30 @@
 = Carousel
 
 A rotating banner for Radiant extensions. Based on "Infinite Carousel" by CatchMyFame.com and includes JQuery (http://www.catchmyfame.com/catchmyfame-jquery-plugins/). Version 1.2.2 of Infinite Carousel. (not latest, by the way).
+
+
+To Install
+1. In your vendor/extensions directory, enter:
+git clone git@github.com:banane/radiant-carousel-extension.git carousel
+
+2. In your radiant root directory, enter:
+rake radiant:extensions:carousel:update
+
+3. In the /vendor/extensions/carousel/public/carousel directory, copy the images that you wish to rotate.
+
+4. In the Radiant Admin UI interface, you can now use the Radiant tags in 2 ways, item by item or in batch mode.
+
+4a. Item-by-item mode. Use the Carousel tag in a more specific and detailed way: 
+
+<r:carousel picture_1="[name of picture1]" caption_1="" alternative_text_1="" />
+Add picture_2, etc. up to 10. 
+
+Alternatively, you can use a directory option:
+
+<r:carousel directory="true" caption_file="captions.txt" alt_text_file="" height="" width="">
+
+5. Create a layout, or integrate into a new layout, the following code:
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
+<script type="text/javascript" src="http://localhost:3000/javascript/jquery.infinitecarousel.js"></script>
+<script type="text/javascript" src="http://localhost:3000/javascript/carousel.js"></script>
+<LINK REL=StyleSheet HREF="http://localhost:3000/stylesheets/carousel.css" TYPE="text/css" MEDIA=screen> 
