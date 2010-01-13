@@ -1,0 +1,11 @@
+#carousel ul {
+    list-style: none;
+    width: 1500px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+#carousel li {
+    display: inline;
+    float: left;
+} 
