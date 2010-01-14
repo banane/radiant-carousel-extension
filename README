@@ -1,6 +1,7 @@
 = Carousel
 
 A rotating banner for Radiant extensions. Based on "Infinite Carousel" by CatchMyFame.com and includes JQuery (http://www.catchmyfame.com/catchmyfame-jquery-plugins/). Version 1.2.2 of Infinite Carousel. (not latest, by the way).
+By Anna Billstrom for Blazing Cloud (http://www.blazingcloud.net)
 
 
 To Install
@@ -9,17 +10,19 @@ git clone git@github.com:banane/radiant-carousel-extension.git carousel
 
 2. OPTIONAL: You can copy images to a radiant public image directory by typing, in your Radiant root:
 rake radiant:extensions:carousel:copy_images
+Or, you can use MediaMaid to get links to your images. 
+Or, you can hand-code in the links to your images.
 
 3. (back to required steps) In your radiant root directory, enter:
 rake radiant:extensions:carousel:update
 
 4. In the Radiant Admin UI interface, use the following tags:
 <r:carousel>
-<r:carousel_image link="[link target for this image]" src="[path to image- use Mediamaid and click the title of the picture to insert]" caption="[the caption for the panel]" />
+<r:carousel_image src="[path to image, i.e. http://localhost/images/1.jpg]" caption="The image" />
 ... iterate through as many carousel images as you want.
 </r:carousel>
 
-5. Lastly, make sure the layout that your page is using has the following HTML tags in its header, in this order. Change [your root directory] to your domain, such as "http://www.acme.com/." The files stem from the public (main) directory on your web server.
+5. Lastly, make sure the pages that carry the carousel have a layout, that includes the following links in the header (in this order):
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
 <script type="text/javascript" src="/javascript/jquery.infinitecarousel.js"></script>
 <script type="text/javascript" src="/javascript/carousel.js"></script>
