@@ -1,3 +1,7 @@
+/*  Radiant-carousel-extension
+  @copyright (c) 2010 Blazing CLoud (http://www.blazingcloud.net)
+  @license MIT License */
+
 $(function(){
 	$('#headerCarousel').infiniteCarousel({
 /*		displayThumbnailNumbers:1,

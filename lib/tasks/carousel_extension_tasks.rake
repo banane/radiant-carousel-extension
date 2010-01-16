@@ -1,3 +1,12 @@
+ # Radiant-carousel-extension
+ # @author Anna Billstrom - http://www.banane.com
+ # @version 1.0
+ # @date January 15, 2010
+ # @category Radiant Extension
+ # @copyright (c) 2010 Blazing CLoud (http://www.blazingcloud.net)
+ # @license MIT License
+ #
+
 namespace :radiant do
   namespace :extensions do
     namespace :carousel do

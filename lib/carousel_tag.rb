@@ -1,4 +1,7 @@
-module CarouselTag
+ # Radiant-carousel-extension
+ # @license MIT License
+ #
+ module CarouselTag
   include Radiant::Taggable
   
   desc "Contains the panels of the carousel, and other objects."

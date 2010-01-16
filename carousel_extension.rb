@@ -1,6 +1,7 @@
-# Uncomment this if you reference any of your controllers in activate
-# require_dependency 'application_controller'
-
+ # Radiant-carousel-extension
+ # @copyright (c) 2010 Blazing CLoud (http://www.blazingcloud.net)
+ # @license MIT License
+ #
 class CarouselExtension < Radiant::Extension
   version "1.0"
   description "A rotating banner based on Infinite Carousel"
